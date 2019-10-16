@@ -1,5 +1,6 @@
 ARG DOCKER_VERSION
 ARG DOCKER_CHANNEL
+ARG CERT_DIR
 
 FROM jenkins/jnlp-slave:3.35-5-alpine
 LABEL maintainer "Josip Radic <josip.radic@gmail.com>"
@@ -7,6 +8,7 @@ LABEL Description="This is a base image, which allows connecting Jenkins agents 
 
 ENV DOCKER_VERSION=${DOCKER_VERSION:-19.03.3}
 ENV DOCKER_CHANNEL=${DOCKER_CHANNEL:-stable}
+ENV CERT_DIR=${CERT_DIR:-/usr/local/share/ca-certificates}
 
 # switch to root
 USER root
