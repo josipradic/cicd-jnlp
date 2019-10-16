@@ -1,6 +1,5 @@
 ARG DOCKER_VERSION
 ARG DOCKER_CHANNEL
-ARG TINI_VERSION
 
 FROM jenkins/jnlp-slave:3.35-5-alpine
 LABEL maintainer "Josip Radic <josip.radic@gmail.com>"
@@ -8,7 +7,6 @@ LABEL Description="This is a base image, which allows connecting Jenkins agents 
 
 ENV DOCKER_VERSION=${DOCKER_VERSION:-19.03.2}
 ENV DOCKER_CHANNEL=${DOCKER_CHANNEL:-stable}
-ENV TINI_VERSION=${TINI_VERSION:-0.18.0}
 
 USER root
 
@@ -26,11 +24,6 @@ ENV LANG=en_US.UTF-8
 
 # installing required packages
 RUN apk add curl iptables
-
-# installing tini
-RUN curl -SsLo /usr/bin/tini https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-amd64 && \
-    chmod +x /usr/bin/tini && \
-    dos2unix /usr/bin/tini
 
 # install docker cli
 RUN curl -Ssl https://download.docker.com/linux/static/${DOCKER_CHANNEL}/x86_64/docker-${DOCKER_VERSION}.tgz > docker.tar.gz && \
@@ -60,4 +53,4 @@ RUN pip install awscli && \
 
 USER jenkins
 
-ENTRYPOINT ["/usr/bin/tini", "--", "jenkins-slave"]
+ENTRYPOINT ["jenkins-slave"]
