@@ -11,8 +11,8 @@ FROM jenkins/jnlp-slave:$JNLP_IMAGE_TAG
 LABEL Maintainer "Josip Radic <josip.radic@gmail.com>"
 LABEL Description="This is a base image, which allows connecting Jenkins agents via JNLP protocols and that provides following tools: j2cli, awscli, docker cli, docker-compose, kubectl and helm" Vendor="Josip Radic" Version=$JNLP_IMAGE_TAG
 
-ENV DOCKER_VERSION=${DOCKER_VERSION}
-ENV DOCKER_CHANNEL=${DOCKER_CHANNEL}
+ENV DOCKER_VERSION=${DOCKER_VERSION:-19.03.3}
+ENV DOCKER_CHANNEL=${DOCKER_CHANNEL:-stable}
 ENV DOCKER_DRIVER=${DOCKER_DRIVER}
 ENV DOCKER_HOST=${DOCKER_HOST}
 ENV DOCKER_TLS_VERIFY=${DOCKER_TLS_VERIFY}
@@ -24,9 +24,8 @@ USER root
 
 # debian packages
 RUN apk update && \
-    DEBIAN_FRONTEND=noninteractive apk add --no-cache --virtual .build-deps \
-    py2-pip groff && \
-    apk del .build-deps
+    DEBIAN_FRONTEND=noninteractive apk add --no-cache \
+    py2-pip groff
 
 # debian, setting locales
 ENV MUSL_LOCPATH=/usr/local/share/i18n/locales/musl
@@ -39,22 +38,20 @@ RUN apk add --update --no-cache --virtual .build-deps \
 ENV LANG=en_US.UTF-8
 
 # installing required packages
-RUN apk add --no-cache --virtual .build-deps \
-    curl iptables && \
-    apk del .build-deps
+RUN apk add --no-cache \
+    curl iptables
 
 # install docker cli
 RUN curl -Ssl https://download.docker.com/linux/static/${DOCKER_CHANNEL}/x86_64/docker-${DOCKER_VERSION}.tgz > /tmp/docker.tar.gz && \
-    tar xf /tmp/docker.tar.gz && \
-    chown -R root:root /tmp/docker && \
-    mv tmp/docker/* /usr/local/bin && \
-    rm -rf /tmp/docker*
+    cd /tmp && tar xf docker.tar.gz && \
+    chown -R root:root docker && \
+    mv docker/* /usr/local/bin && \
+    rm -rf docker*
 
 # install docker-compose
-RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache \
     py-pip python-dev libffi-dev openssl-dev gcc libc-dev make && \
-    pip install docker-compose && \
-    apk del .build-deps
+    pip install docker-compose
 
 # install helm
 RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get > get_helm.sh && \
