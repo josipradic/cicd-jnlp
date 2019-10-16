@@ -5,7 +5,7 @@ SERVICE=$(echo $DOCKER_HOST | cut -d'/' -f3 | cut -d':' -f1)
 PORT=$(echo $DOCKER_HOST | sed -e 's,^.*:,:,g' -e 's,.*:\([0-9]*\).*,\1,g' -e 's,[^0-9],,g')
 
 # let's wait for docker host to be ready before continue
-if [[ ! -e $SERVICE && ! -e $PORT && ! -e $CERT_DIR ]]; then
+if [[ ! -z $SERVICE && ! -z $PORT && ! -z $CERT_DIR ]]; then
 
     # number of retries
     RETRIES=50
