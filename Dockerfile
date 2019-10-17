@@ -23,19 +23,18 @@ RUN \
     echo "Installing dependencies ..." && \
         apk update && \
         DEBIAN_FRONTEND=noninteractive apk add --no-cache \
-        curl cmake make musl-dev gcc gettext-dev libintl && \
-    \
-    echo "Installing docker-compose, awscli and j2cli ..." && \
-        apk add --no-cache --virtual .build-deps \
-        py-pip python-dev libffi-dev openssl-dev libc-dev && \
-        pip install docker-compose && \
-        pip install awscli && \
-        pip install j2cli && \
-        apk del --no-cache .build-deps && \
+        git curl cmake make musl-dev gcc gettext-dev libintl && \
     \
     echo "Installing locales ..." && \
         cd /tmp && git clone https://github.com/rilian-la-te/musl-locales.git && \
         cd /tmp/musl-locales && cmake . && make && make install && \
+    \
+    echo "Installing docker-compose, awscli, j2cli and kompose ..." && \
+        apk add --no-cache \
+        py-pip python-dev libffi-dev openssl-dev libc-dev && \
+        pip install docker-compose && \
+        pip install awscli && \
+        pip install j2cli && \
     \
     echo "Installing docker ..." && \
         curl -Ssl https://download.docker.com/linux/static/stable/x86_64/docker-19.03.3.tgz > /tmp/docker.tar.gz && \
@@ -53,13 +52,7 @@ RUN \
     echo "Installing kubectl ..." && \
         curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
         chmod 755 kubectl && \
-        mv kubectl /usr/local/bin/kubectl && \
-    \
-    echo "Installing kompose ..." && \
-        curl -L https://github.com/kubernetes/kompose/releases/download/v1.19.0/kompose-linux-amd64 -o kompose && \
-        dos2unix kompose && \
-        chmod +x kompose && \
-        mv ./kompose /usr/local/bin/kompose
+        mv kubectl /usr/local/bin/kubectl
 
 # switch to jenkins
 USER jenkins
