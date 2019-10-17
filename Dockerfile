@@ -23,7 +23,7 @@ RUN \
     echo "Installing dependencies ..." && \
         apk update && \
         DEBIAN_FRONTEND=noninteractive apk add --no-cache \
-        cmake make musl-dev gcc gettext-dev libintl && \
+        curl cmake make musl-dev gcc gettext-dev libintl && \
     \
     echo "Installing locales ..." && \
         cd /tmp && git clone https://github.com/rilian-la-te/musl-locales.git && \
