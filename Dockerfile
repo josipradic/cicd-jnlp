@@ -23,14 +23,11 @@ RUN \
     echo "Installing dependencies ..." && \
         apk update && \
         DEBIAN_FRONTEND=noninteractive apk add --no-cache \
-        curl && \
+        cmake make musl-dev gcc gettext-dev libintl && \
     \
     echo "Installing locales ..." && \
-        apk add --no-cache --virtual .build-deps \
-        git cmake make musl-dev gcc gettext-dev libintl && \
         cd /tmp && git clone https://github.com/rilian-la-te/musl-locales.git && \
         cd /tmp/musl-locales && cmake . && make && make install && \
-        apk del --no-cache .build-deps && \
     \
     echo "Installing docker ..." && \
         curl -Ssl https://download.docker.com/linux/static/stable/x86_64/docker-19.03.3.tgz > /tmp/docker.tar.gz && \
@@ -39,10 +36,13 @@ RUN \
         mv docker/* /usr/local/bin && \
         rm -rf docker* && \
     \
-    echo "Installing docker-compose ..." && \
-        apk add --no-cache \
+    echo "Installing docker-compose, awscli and j2cli ..." && \
+        apk add --no-cache --virtual .build-deps \
         py-pip python-dev libffi-dev openssl-dev gcc libc-dev make && \
         pip install docker-compose && \
+        pip install awscli && \
+        pip install j2cli && \
+        apk del --no-cache .build-deps && \
     \
     echo "Installing kubectl ..." && \
         curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
@@ -56,16 +56,9 @@ RUN \
         rm -f get_helm.sh && \
     \
     echo "Installing kompose ..." && \
-        apk add --no-cache --virtual .build-deps \
-        git go musl-dev && \
-        GOPATH=/ go get -u github.com/kubernetes/kompose && \
-        apk del --no-cache .build-deps && \
-    \
-    echo "Installing awscli ..." && \
-        pip install awscli && \
-    \
-    echo "Installing j2cli ..." && \
-        pip install j2cli
+        curl -L https://github.com/kubernetes/kompose/releases/download/v1.19.0/kompose-linux-amd64 -o kompose && \
+        chmod +x kompose && \
+        sudo mv ./kompose /usr/local/bin/kompose
 
 # switch to jenkins
 USER jenkins
