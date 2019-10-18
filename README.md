@@ -1,4 +1,6 @@
 # Jenkins JLNP agent powered with CICD tools
+[![Build Status](https://img.shields.io/docker/stars/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/docker/pulls/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/docker/automated/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/docker/build/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/github/v/tag/josipradic/jenkins-jnlp-cicd)](https://github.com/josipradic/jenkins-jnlp-cicd/releases/tag/1.0.0)
+
 A docker image based on [Jenkins JLNP slave](https://hub.docker.com/r/jenkins/jnlp-slave/) agent powered by CICD tools:
 - `docker`
 - `docker-compose`
