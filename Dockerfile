@@ -55,6 +55,11 @@ RUN \
     echo "Installing kompose ..." && \
         go get -v -u github.com/kubernetes/kompose
 
+COPY kompose-patch.sh /usr/local/bin/kompose-patch
+RUN \
+    echo "Installing kompose patch ..." && \
+        chmod +x /usr/local/bin/kompose-patch
+
 # switch to jenkins
 USER jenkins
 
