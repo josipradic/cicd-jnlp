@@ -6,6 +6,8 @@
 # 
 # @author Josip Radic <josip.radic@gmail.com><skype:josip.radich>
 # @version 2019/12/23
+find * -type f -name "*-networkpolicy.yaml" -exec sed -i 's/extensions\/v1beta1/networking.k8s.io\/v1/g' {} \;
+find * -type f -name "*-podsecuritypolicy.yaml" -exec sed -i 's/extensions\/v1beta1/policy\/v1beta1/g' {} \;
 find * -type f -name "*-daemonset.yaml" -o -name "*-deployment.yaml" -exec sed -i 's/extensions\/v1beta1/apps\/v1/g' {} \;
 find * -type f -name "*-statefulset.yaml" -o -name "*-replicaset.yaml" -exec sed -i 's/extensions\/v1beta1/apps\/v1/g' {} \;
 find * -type f -name "*-deployment.yaml" -exec bash -c 'SERVICE=$(echo "{}" | cut -f1 -d"-") && sed -i "s/template:/selector:%NL%    matchLabels:%NL%      io.kompose.service: $SERVICE%NL%  template:/g" {}' \;
