@@ -38,7 +38,10 @@ RUN \
     echo "Installing aws ..." && \
         pip install awscli && \
     echo "Installing j2 ..." && \
-        pip install j2cli
+        pip install j2cli && \
+    echo "Installing yq ..." && \
+        wget -O /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/2.4.1/yq_linux_amd64" && \
+        chmod +x /usr/local/bin/yq
 
 RUN \
     echo "Installing helm ..." && \
