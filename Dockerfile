@@ -59,9 +59,12 @@ RUN \
         go get -v -u github.com/kubernetes/kompose
 
 COPY kompose-patch.sh /usr/local/bin/kompose-patch
+COPY knsk.sh /usr/local/bin/knsk
 RUN \
     echo "Installing kompose patch ..." && \
-        chmod +x /usr/local/bin/kompose-patch
+        chmod +x /usr/local/bin/kompose-patch && \
+    echo "Installing knsk kubernetes namespace killer ..." && \
+        chmod +x /usr/local/bin/knsk
 
 # switch to jenkins
 USER jenkins
