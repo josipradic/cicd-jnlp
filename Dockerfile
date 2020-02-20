@@ -35,6 +35,8 @@ RUN \
         apk add --no-cache \
         py-pip python-dev libffi-dev openssl-dev libc-dev && \
         pip install docker-compose && \
+    echo "Installing dotnet ..." && \
+        pip install python-dotenv[cli] && \
     echo "Installing aws ..." && \
         pip install awscli && \
     echo "Installing j2 ..." && \
