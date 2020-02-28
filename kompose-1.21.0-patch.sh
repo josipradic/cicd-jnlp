@@ -9,10 +9,15 @@
 # @version 2020/02/28
 
 # find deployment or service
-file=$(find * -type f -name "*-deployment.yaml" -o -name "*-service.yaml" -exec echo {} \;)
+files=$(find * -type f -name "*-deployment.yaml" -o -name "*-service.yaml" -exec echo {} \;)
 
-# add missing metadata.annotations to ingress files
-find * -type f -name "*-ingress.yaml" -exec yq write -i {} metadata.annotations "$(yq read $file metadata.annotations)" \;
+for file in $files;
+do
+    service=$(echo $file | cut -d "-" -f 1)
 
-# fix annotations added by yq (needs to be as objects, not strings)
-find * -type f -name "*-ingress.yaml" -exec sed -i 's/annotations: |-/annotations:/g' {} \;
+    # add missing metadata.annotations to ingress files
+    find * -type f -name "$service-ingress.yaml" -exec yq write -i {} metadata.annotations "$(yq read $file metadata.annotations)" \;
+
+    # fix annotations added by yq (needs to be as objects, not strings)
+    find * -type f -name "$service-ingress.yaml" -exec sed -i 's/annotations: |-/annotations:/g' {} \;
+done
