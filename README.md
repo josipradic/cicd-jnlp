@@ -1,14 +1,18 @@
-# Jenkins JLNP agent powered with CICD tools
+# cicd-jnlp
 [![Build Status](https://img.shields.io/docker/stars/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/docker/pulls/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/docker/cloud/automated/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/docker/cloud/build/josipradic/jenkins-jnlp-cicd)](https://hub.docker.com/r/josipradic/jenkins-jnlp-cicd) [![Build Status](https://img.shields.io/github/v/tag/josipradic/jenkins-jnlp-cicd)](https://github.com/josipradic/jenkins-jnlp-cicd/releases)
 
-A docker image based on [Jenkins JLNP slave](https://hub.docker.com/r/jenkins/jnlp-slave/) agent powered by CICD tools:
+A docker image based on [Jenkins JLNP slave](https://hub.docker.com/r/jenkins/jnlp-slave/) agent powered by handy tools used in CICD:
 - `docker`
 - `docker-compose`
+- `dotnet`
 - `kubectl`
 - `helm`
 - `kompose`
+- `kompose patches`
+- `knsk`
 - `aws`
 - `j2`
+- `yq`
 
 You can build this image using a docker build argument `JNLP_IMAGE_TAG` and define the tag you want to build from `jenkins/jnlp-slave` original image. It accepts several docker environment variables where you can define docker: host, storage driver, TLS mode and TLS certificate directories. Environment variables are optional with default values:
 ```
