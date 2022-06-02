@@ -1,6 +1,6 @@
-ARG JNLP_IMAGE_TAG=3.35-5-alpine
+ARG JNLP_IMAGE_TAG=4.10-3-jdk11
 
-FROM jenkins/jnlp-slave:$JNLP_IMAGE_TAG
+FROM jenkins/inbound-agent:$JNLP_IMAGE_TAG
 LABEL Maintainer "Josip Radic <josip.radic@gmail.com>"
 LABEL Description="This is a base image, which allows connecting Jenkins agents via JNLP protocols and that provides following tools: j2cli, awscli, docker cli, docker-compose, kubectl and helm" Vendor="Josip Radic" Version=$JNLP_IMAGE_TAG
 
