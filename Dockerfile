@@ -1,4 +1,4 @@
-ARG JNLP_IMAGE_TAG=4.10-3-jdk11
+ARG JNLP_IMAGE_TAG=4.10-3-alpine-jdk11
 
 FROM jenkins/inbound-agent:$JNLP_IMAGE_TAG
 LABEL Maintainer "Josip Radic <josip.radic@gmail.com>"
@@ -33,7 +33,8 @@ RUN \
         docker && \
     echo "Installing docker-compose ..." && \
         apk add --no-cache \
-        py-pip python-dev libffi-dev openssl-dev libc-dev && \
+        py-pip python3-dev libffi-dev openssl-dev libc-dev && \
+        pip3 install --upgrade pip && \
         pip install docker-compose && \
     echo "Installing dotnet ..." && \
         pip install python-dotenv[cli] && \
@@ -58,7 +59,9 @@ RUN \
         mv kubectl /usr/local/bin/kubectl
 RUN \
     echo "Installing kompose ..." && \
-        go get -v -u github.com/kubernetes/kompose
+        curl -L https://github.com/kubernetes/kompose/releases/download/v1.26.1/kompose-linux-amd64 -o kompose && \
+        chmod +x kompose && \
+        mv ./kompose /usr/local/bin/kompose
 
 COPY kompose-1.20.0-patch.sh /usr/local/bin/kompose-1.20.0-patch
 COPY kompose-1.21.0-patch.sh /usr/local/bin/kompose-patch
