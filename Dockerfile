@@ -64,7 +64,8 @@ RUN \
         mv ./kompose /usr/local/bin/kompose
 
 COPY kompose-1.20.0-patch.sh /usr/local/bin/kompose-1.20.0-patch
-COPY kompose-1.21.0-patch.sh /usr/local/bin/kompose-patch
+COPY kompose-1.21.0-patch.sh /usr/local/bin/kompose-1.21.0-patch
+COPY kompose-1.26.1-patch.sh /usr/local/bin/kompose-patch
 COPY knsk.sh /usr/local/bin/knsk
 RUN \
     echo "Installing kompose patch ..." && \
